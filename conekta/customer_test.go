@@ -24,12 +24,13 @@ var _ = Describe("Creating customer", func() {
 			customer.Name = "Fulanito Pérez"
 			customer.Email = "fulanito@conekta.com"
 			customer.Phone = "+52181818181"
-			//Testing payment
+			//Testing payment src
 			payment := conekta.PaymentSource{
 				Type:    "card",
 				TokenID: "tok_test_visa_4242",
 			}
 			customer.PaymentSources = append(customer.PaymentSources, payment)
+			//Send to conekta
 			statusCode := customer.Post()
 			Expect(statusCode).Should(Equal(200))
 		})

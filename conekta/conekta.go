@@ -29,6 +29,5 @@ func request(method, url string, v interface{}) (statusCode int) {
 		return
 	}
 	defer res.Body.Close()
-	// body, _ := ioutil.ReadAll(res.Body)
 	return res.StatusCode
 }
