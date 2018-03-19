@@ -1,27 +1,10 @@
 package conekta
 
 import (
-	"fmt"
-	"io/ioutil"
 	"net/http"
 	"bytes"
 	"encoding/json"
 )
-
-type Token struct {
-	Id       string `json:"id"`
-	Object   string `json:"object"`
-	Used     bool   `json:"used"`
-	LiveMode bool   `json:"livemode"`
-}
-
-type Error struct {
-	Type             string `json:"id"`
-	Message          string `json:"message"`
-	MessagePurchaser string `json:"message_to_purchaser"`
-	ErrorCode        string `json:"error_code"`
-	Param            string `json:"param"`
-}
 
 var (
 	ApiKey, ApiVersion = "", "2.0.0"
@@ -31,7 +14,7 @@ const (
 	conektaUrl = "https://api.conekta.io"
 )
 
-func request(method, url string, v interface{}) {
+func request(method, url string, v interface{}) (statusCode int) {
 	jsonPayload, err := json.Marshal(v)
 	if err != nil {
 		return
@@ -46,7 +29,6 @@ func request(method, url string, v interface{}) {
 		return
 	}
 	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-	fmt.Println(res)
-	fmt.Println(string(body))
+	// body, _ := ioutil.ReadAll(res.Body)
+	return res.StatusCode
 }

@@ -28,6 +28,6 @@ type Address struct {
 	PostalCode string `json:"postal_code"`
 }
 
-func (c *Customer) Post() {
-	request("POST", conektaUrl+"/customers", c)
+func (c *Customer) Post() (statusCode int) {
+	return request("POST", conektaUrl+"/customers", c)
 }

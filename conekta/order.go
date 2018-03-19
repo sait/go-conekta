@@ -5,6 +5,6 @@ type Order struct {
 	Data string
 }
 
-func (o *Order) Post() {
-	request("POST", conektaUrl+"/orders", o)
+func (o *Order) Post() (statusCode int) {
+	return request("POST", conektaUrl+"/orders", o)
 }
