@@ -31,7 +31,7 @@ var _ = Describe("Creating customer", func() {
 			}
 			customer.PaymentSources = append(customer.PaymentSources, payment)
 			//Send to conekta
-			statusCode := customer.Create()
+			statusCode, _ := customer.Create()
 			Expect(statusCode).Should(Equal(200))
 		})
 	})

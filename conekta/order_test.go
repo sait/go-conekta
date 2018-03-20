@@ -11,13 +11,13 @@ import (
 
 func TestOrder(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Create a order")
+	RunSpecs(t, "Handling order")
 }
 
-var _ = Describe("Creating order", func() {
+var _ = Describe("Handle order", func() {
 	//Testing key
 	conekta.ApiKey = "key_eYvWV7gSDkNYXsmr"
-	Context("Post order", func() {
+	Context("Create order", func() {
 		It("Should response 200", func() {
 			//New Order
 			order := new(conekta.Order)
@@ -46,7 +46,7 @@ var _ = Describe("Creating order", func() {
 			order.Metadata = conekta.Metadata{
 				"reference": "12987324097",
 				"more_info": "lalalalala",
-				"hello": "world",
+				"hello":     "world",
 			}
 			charge := conekta.Charge{
 				PaymentMethod: conekta.PaymentMethod{
@@ -55,8 +55,29 @@ var _ = Describe("Creating order", func() {
 			}
 			order.Charges = append(order.Charges, charge)
 			//Send to conekta
-			statusCode := order.Create()
+			statusCode, _ := order.Create()
 			Expect(statusCode).Should(Equal(200))
+		})
+	})
+	Context("Update order", func() {
+		It("Should response 200", func() {
+			order := new(conekta.Order)
+			order.ID = "ord_2fw8EWJusiRrxdPzT"
+			order.Currency = "MXN"
+			statusCode, _ := order.Update()
+			Expect(statusCode).Should(Equal(200))
+		})
+	})
+	Context("Capture order", func() {
+		It("Should response 200", func() {
+		})
+	})
+	Context("Refound order", func() {
+		It("Should response 200", func() {
+		})
+	})
+	Context("Find order", func() {
+		It("Should response 200", func() {
 		})
 	})
 })

@@ -4,7 +4,21 @@ import (
 	"bytes"
 	"encoding/json"
 	"net/http"
+	"io/ioutil"
 )
+
+type ConektaError struct {
+	Object  string   `json:"object,omitempty"`
+	Type    string   `json:"type,omitempty"`
+	LogId   string   `json:"log_id,omitempty"`
+	Details []Detail `json:"details,omitempty"`
+}
+
+type Detail struct {
+	Debug_message string `json:"debug_message,omitempty"`
+	Message       string `json:"message,omitempty"`
+	Code          string `json:"code,omitempty"`
+}
 
 var (
 	ApiKey, ApiVersion = "", "2.0.0"
@@ -14,7 +28,7 @@ const (
 	conektaUrl = "https://api.conekta.io"
 )
 
-func request(method, path string, v interface{}) (statusCode int) {
+func request(method, path string, v interface{}) (statusCode int, response []byte) {
 	jsonPayload, err := json.Marshal(v)
 	if err != nil {
 		return
@@ -29,5 +43,12 @@ func request(method, path string, v interface{}) (statusCode int) {
 		return
 	}
 	defer res.Body.Close()
-	return res.StatusCode
+	body, _ := ioutil.ReadAll(res.Body)
+	return res.StatusCode, body
+}
+
+func checkError(err error) {
+	if err != nil {
+		panic(err)
+	}
 }
