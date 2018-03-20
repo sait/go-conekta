@@ -2,6 +2,7 @@ package conekta_test
 
 import (
 	"testing"
+	"os"
 
 	"github.com/sait/go-conekta/conekta"
 
@@ -16,7 +17,7 @@ func TestCustomer(t *testing.T) {
 
 var _ = Describe("Creating customer", func() {
 	//Testing key
-	conekta.ApiKey = "key_eYvWV7gSDkNYXsmr"
+	conekta.ApiKey = os.Getenv("CONEKTAKEY")
 	Context("Post customer", func() {
 		It("Should response 200", func() {
 			//New customer

@@ -1,6 +1,7 @@
 package conekta_test
 
 import (
+	"os"
 	"testing"
 
 	"github.com/sait/go-conekta/conekta"
@@ -16,7 +17,7 @@ func TestOrder(t *testing.T) {
 
 var _ = Describe("Handle order", func() {
 	//Testing key
-	conekta.ApiKey = "key_eYvWV7gSDkNYXsmr"
+	conekta.ApiKey = os.Getenv("CONEKTAKEY")
 	Context("Create order", func() {
 		It("Should response 200", func() {
 			//New Order
@@ -34,7 +35,7 @@ var _ = Describe("Handle order", func() {
 			order.ShippingLines = append(order.ShippingLines, shipping)
 			order.Currency = "MXN"
 			//testing customer id
-			order.CustomerInfo.CustomerID = "cus_2fkJPFjQKABcmiZWz"
+			order.CustomerInfo.CustomerID = "cus_2iFzZsBLvnx11gyXy"
 			order.ShippingContact = conekta.ShippingContact{
 				Address: conekta.Address{
 					Street1:    "Calle 123, int 2",
@@ -62,7 +63,7 @@ var _ = Describe("Handle order", func() {
 	Context("Update order", func() {
 		It("Should response 200", func() {
 			order := new(conekta.Order)
-			order.ID = "ord_2fw8EWJusiRrxdPzT"
+			order.ID = "ord_2iGHf3etsiNEji8Ry"
 			order.Currency = "MXN"
 			statusCode, _ := order.Update()
 			Expect(statusCode).Should(Equal(200))

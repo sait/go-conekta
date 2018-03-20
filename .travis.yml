@@ -1,8 +1,10 @@
 language: go
-
 go:
-  - 1.7.x
-  - 1.8.x
-  - 1.9.x
-  - 1.10.x
-  - master
+- 1.7.x
+- 1.8.x
+- 1.9.x
+- 1.10.x
+- master
+env:
+  global:
+    secure: asU6Fy3I6E4yaQDeJA58B0PwbYfFuFToNidDV+QtM8vvIWzAlvFIhG1VsKobadRkLF90aC4ESoMW+n3W87aBUrMXqJm6IWi3i7Ruf/1GBwdenMwr5BWREYWZrenn7kQrVoKPjcHYIVj1HAnlBmWUTJZFOqCFkGEt3AGHP1ojeCq1hMIU2NReY9ytjcuKMSLUh5ojzR8V79kHHxhj0Zoh8UwLQMhQjxAHv2GfX8EWNVDbiYiyGHyALA3U0AivtX4L1+oofg8A/0pwakF1yLr5Be/dJWkpQyf1WGj0z+X2URGJHbYbgTwaXk7QRuduBR07unIRi+iruhorSZ9iqBvFVza+A2YIeSK/ptsaNPj+WNM5o83DbH1Hi+myJoSatFAe2xwrWOtmbgEDwG3vxQmMcAeHkhtliuK7EY16kP3sZNjzb1i7iQvNyLI0RSq/BGY6wGDDkscIF1PTWznslFAw1Ea76rbld+ChPAflibEOJF9x345BBEr/n+7Micx/nKdYsKIHbL2NcyAEGajA9t77gTbWzR1ugNbxxhd/Qh07UsnrNPbV/7jI2w8ltsLSJekGkgBLikw5tUKAtPn08ar2MzOm+Qqt1nagna22/MXoP51zAm2FFJxM76XJbutqW5+5Sn0suoqOmGjlEajwbB77aPNGg20M5e7lRH0b15aQ7U0=
