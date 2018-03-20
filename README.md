@@ -1,3 +1,3 @@
-[![Build Status](https://www.travis-ci.org/sait/tddexample.svg?branch=master)](https://www.travis-ci.org/sait/tddexample)
+[![Build Status](https://travis-ci.org/sait/go-conekta.svg?branch=master)](https://travis-ci.org/sait/go-conekta)
 
 Libreria que permite el uso de conekta desde golang...
