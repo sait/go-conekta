@@ -22,13 +22,13 @@ var _ = Describe("Creating order", func() {
 			//New Order
 			order := new(conekta.Order)
 			item := conekta.LineItem{
-				Name: "Tacos",
+				Name:      "Tacos",
 				UnitPrice: 1000,
-				Quantity: 12,
+				Quantity:  12,
 			}
 			order.LineItems = append(order.LineItems, item)
 			shipping := conekta.ShippingLine{
-				Amunt: 1500,
+				Amunt:   1500,
 				Carrier: "FEDEX",
 			}
 			order.ShippingLines = append(order.ShippingLines, shipping)
@@ -36,14 +36,18 @@ var _ = Describe("Creating order", func() {
 			//testing customer id
 			order.CustomerInfo.CustomerID = "cus_2fkJPFjQKABcmiZWz"
 			order.ShippingContact = conekta.ShippingContact{
-				Address: conekta.Address {
-					Street1: "Calle 123, int 2",
+				Address: conekta.Address{
+					Street1:    "Calle 123, int 2",
 					PostalCode: "06100",
-					Country: "MX",
+					Country:    "MX",
 				},
 			}
-			order.Metadata.Reference = "12987324097"
-			order.Metadata.Moreinfo = "lalalalala"
+			//Adding some metadata
+			order.Metadata = conekta.Metadata{
+				"reference": "12987324097",
+				"more_info": "lalalalala",
+				"hello": "world",
+			}
 			charge := conekta.Charge{
 				PaymentMethod: conekta.PaymentMethod{
 					Type: "default",
@@ -51,7 +55,7 @@ var _ = Describe("Creating order", func() {
 			}
 			order.Charges = append(order.Charges, charge)
 			//Send to conekta
-			statusCode := order.Post()
+			statusCode := order.Create()
 			Expect(statusCode).Should(Equal(200))
 		})
 	})

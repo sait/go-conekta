@@ -1,9 +1,11 @@
 package conekta
 
 type Customer struct {
+	CustomerID       string            `json:"customer_id,omitempty"`
 	Name             string            `json:"name,omitempty"`
-	Email            string            `json:"email,omitempty"`
 	Phone            string            `json:"phone,omitempty"`
+	Email            string            `json:"email,omitempty"`
+	Corporate        bool              `json:"corporate,omitempty"`
 	PaymentSources   []PaymentSource   `json:"payment_sources,omitempty"`
 	ShippingContacts []ShippingContact `json:"shipping_contacts,omitempty"`
 }
@@ -28,6 +30,6 @@ type Address struct {
 	PostalCode string `json:"postal_code,omitempty"`
 }
 
-func (c *Customer) Post() (statusCode int) {
-	return request("POST", conektaUrl+"/customers", c)
+func (c *Customer) Create() (statusCode int) {
+	return request("POST", "/customers", c)
 }

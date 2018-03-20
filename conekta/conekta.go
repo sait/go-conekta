@@ -1,9 +1,9 @@
 package conekta
 
 import (
-	"net/http"
 	"bytes"
 	"encoding/json"
+	"net/http"
 )
 
 var (
@@ -14,13 +14,13 @@ const (
 	conektaUrl = "https://api.conekta.io"
 )
 
-func request(method, url string, v interface{}) (statusCode int) {
+func request(method, path string, v interface{}) (statusCode int) {
 	jsonPayload, err := json.Marshal(v)
 	if err != nil {
 		return
 	}
 	payload := bytes.NewReader(jsonPayload)
-	req, _ := http.NewRequest(method, url, payload)
+	req, _ := http.NewRequest(method, conektaUrl+path, payload)
 	req.Header.Add("accept", "application/vnd.conekta-v"+ApiVersion+"+json")
 	req.SetBasicAuth(ApiKey, "")
 	req.Header.Add("content-type", "application/json")
