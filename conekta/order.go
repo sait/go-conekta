@@ -16,8 +16,9 @@ type Order struct {
 	DiscountLines   []DiscountLine  `json:"discount_lines,omitempty"`
 	Livemode        bool            `json:"livemode,omitempty"`
 	PreAuthorize    bool            `json:"pre_authorize,omitempty"`
-	ShippingContact ShippingContact `json:"shipping_contact,omitempty"`
+	ShippingContact ShippingContact `json:"-"`
 	Amunt           float64         `json:"amount,omitempty"`
+	Reason          string          `json:"reason,omitempty"`
 	AmountRefunded  float64         `json:"amount_refunded,omitempty"`
 	PaymentStatus   string          `json:"payment_status,omitempty"`
 	CustomerInfo    Customer        `json:"customer_info,omitempty"`
@@ -33,7 +34,7 @@ type LineItem struct {
 	UnitPrice   float64  `json:"unit_price,omitempty"`
 	Quantity    float64  `json:"quantity,omitempty"`
 	Sku         string   `json:"sku,omitempty"`
-	Tags        []string `json:"tags,omitempty"`
+	Tags        Tags     `json:"tags,omitempty"`
 	Brand       string   `json:"brand,omitempty"`
 	ParentID    string   `json:"parent_id,omitempty"`
 	Metadata    Metadata `json:"metadata,omitempty"`
@@ -69,6 +70,8 @@ type DiscountLine struct {
 	Metadata Metadata `json:"metadata,omitempty"`
 }
 
+type Tags map[string]string
+
 type Metadata map[string]string
 
 type Charge struct {
@@ -76,6 +79,7 @@ type Charge struct {
 	Object              string        `json:"object,omitempty"`
 	CreatedAt           int64         `json:"created_at,omitempty"`
 	UpdatedAt           int64         `json:"updated_at,omitempty"`
+	ExpiresAt           int64         `json:"expires_at,omitempty"`
 	Currency            string        `json:"currency,omitempty"`
 	Amount              float64       `json:"amount,omitempty"`
 	MonthlyInstallments float64       `json:"monthly_installments,omitempty"`
@@ -87,7 +91,8 @@ type Charge struct {
 }
 
 type PaymentMethod struct {
-	Type string `json:"type,omitempty"`
+	Type    string `json:"type,omitempty"`
+	TokenId string `json:"token_id,omitempty"`
 }
 
 // Creates a new Order
@@ -103,6 +108,26 @@ func (o *Order) Create() (statusCode int, conektaError *ConektaError) {
 // Updates an existing Order
 func (o *Order) Update() (statusCode int, conektaError *ConektaError) {
 	statusCode, response := request("PUT", "/orders/"+o.ID, o)
+	if statusCode != 200 {
+		err := json.Unmarshal(response, &conektaError)
+		checkError(err)
+	}
+	return
+}
+
+// Process a pre-authorized order.
+func (o *Order) Capture() (statusCode int, conektaError *ConektaError) {
+	statusCode, response := request("POST", "/orders/"+o.ID+"/capture", nil)
+	if statusCode != 200 {
+		err := json.Unmarshal(response, &conektaError)
+		checkError(err)
+	}
+	return
+}
+
+// A Refund details the amount and reason why an order was refunded.
+func (o *Order) Refund() (statusCode int, conektaError *ConektaError) {
+	statusCode, response := request("POST", "/orders/"+o.ID+"/refunds", o)
 	if statusCode != 200 {
 		err := json.Unmarshal(response, &conektaError)
 		checkError(err)

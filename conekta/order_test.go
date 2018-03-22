@@ -1,6 +1,7 @@
 package conekta_test
 
 import (
+	"fmt"
 	"os"
 	"testing"
 
@@ -18,12 +19,12 @@ func TestOrder(t *testing.T) {
 var _ = Describe("Handle order", func() {
 	//Testing key
 	conekta.ApiKey = os.Getenv("CONEKTAKEY")
-	Context("Create order", func() {
+	Context("Create order to a customer", func() {
 		It("Should response 200", func() {
 			//New Order
 			order := new(conekta.Order)
 			item := conekta.LineItem{
-				Name:      "Tacos",
+				Name:      "Tortugas",
 				UnitPrice: 1000,
 				Quantity:  12,
 			}
@@ -55,8 +56,38 @@ var _ = Describe("Handle order", func() {
 				},
 			}
 			order.Charges = append(order.Charges, charge)
-			//Send to conekta
 			statusCode, _ := order.Create()
+			Expect(statusCode).Should(Equal(200))
+		})
+	})
+	Context("Create a order directly", func() {
+		It("Should response 200", func() {
+			//New Order
+			order := new(conekta.Order)
+			item := conekta.LineItem{
+				Name:        "Churros Locos",
+				Description: "Made in Mexico.",
+				UnitPrice:   20000,
+				Quantity:    2,
+			}
+			order.LineItems = append(order.LineItems, item)
+			order.Currency = "MXN"
+			order.Metadata = conekta.Metadata{
+				"test": "extra_info",
+				"hola": "mundo",
+			}
+			charge := conekta.Charge{
+				PaymentMethod: conekta.PaymentMethod{
+					Type:    "card",
+					TokenId: "tok_test_visa_4242",
+				},
+			}
+			order.Charges = append(order.Charges, charge)
+			order.CustomerInfo.Name = "Fulanito Pérez"
+			order.CustomerInfo.Email = "fulanito@conekta.com"
+			order.CustomerInfo.Phone = "+52181818181"
+			statusCode, conektaError := order.Create()
+			fmt.Println(conektaError)
 			Expect(statusCode).Should(Equal(200))
 		})
 	})
@@ -71,14 +102,21 @@ var _ = Describe("Handle order", func() {
 	})
 	Context("Capture order", func() {
 		It("Should response 200", func() {
+			order := new(conekta.Order)
+			order.ID = "ord_2iGPs5fX4uTnqhCJX"
+			statusCode, _ := order.Capture()
+			//A preauthorized order can captured only once
+			Expect(statusCode).Should(Equal(428))
 		})
 	})
 	Context("Refound order", func() {
 		It("Should response 200", func() {
-		})
-	})
-	Context("Find order", func() {
-		It("Should response 200", func() {
+			order := new(conekta.Order)
+			order.ID = "ord_2iGvvypPNmxqzBcnA"
+			order.Reason = "requested_by_client"
+			order.Amunt = 100
+			statusCode, _ := order.Refund()
+			Expect(statusCode).Should(Equal(200))
 		})
 	})
 })
