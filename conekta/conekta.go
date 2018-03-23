@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"io/ioutil"
-	"fmt"
 )
 
 type ConektaError struct {
@@ -30,11 +29,10 @@ const (
 )
 
 func request(method, path string, v interface{}) (statusCode int, response []byte) {
-	jsonPayload, err := json.MarshalIndent(v, "", "   ")
+	jsonPayload, err := json.Marshal(v)
 	if err != nil {
 		return
 	}
-	fmt.Printf("Este es el JSON que le mando==================\n%s\n", jsonPayload)
 	payload := bytes.NewReader(jsonPayload)
 	req, _ := http.NewRequest(method, conektaUrl+path, payload)
 	req.Header.Add("accept", "application/vnd.conekta-v"+ApiVersion+"+json")

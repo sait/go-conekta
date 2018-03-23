@@ -1,7 +1,6 @@
 package conekta_test
 
 import (
-	"fmt"
 	"os"
 	"testing"
 
@@ -37,7 +36,7 @@ var _ = Describe("Handle order", func() {
 			order.Currency = "MXN"
 			//testing customer id
 			order.CustomerInfo.CustomerID = "cus_2iFzZsBLvnx11gyXy"
-			order.ShippingContact = conekta.ShippingContact{
+			order.ShippingContact = &conekta.ShippingContact{
 				Address: conekta.Address{
 					Street1:    "Calle 123, int 2",
 					PostalCode: "06100",
@@ -86,8 +85,7 @@ var _ = Describe("Handle order", func() {
 			order.CustomerInfo.Name = "Fulanito Pérez"
 			order.CustomerInfo.Email = "fulanito@conekta.com"
 			order.CustomerInfo.Phone = "+52181818181"
-			statusCode, conektaError := order.Create()
-			fmt.Println(conektaError)
+			statusCode, _ := order.Create()
 			Expect(statusCode).Should(Equal(200))
 		})
 	})
