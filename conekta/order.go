@@ -31,8 +31,8 @@ type LineItem struct {
 	Object      string   `json:"object,omitempty"`
 	Name        string   `json:"name,omitempty"`
 	Description string   `json:"description,omitempty"`
-	UnitPrice   float64  `json:"unit_price,omitempty"`
-	Quantity    float64  `json:"quantity,omitempty"`
+	UnitPrice   int64    `json:"unit_price,omitempty"`
+	Quantity    int64    `json:"quantity,omitempty"`
 	Sku         string   `json:"sku,omitempty"`
 	Tags        Tags     `json:"tags,omitempty"`
 	Brand       string   `json:"brand,omitempty"`

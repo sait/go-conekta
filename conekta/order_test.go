@@ -110,7 +110,7 @@ var _ = Describe("Handle order", func() {
 	Context("Refound order", func() {
 		It("Should response 200", func() {
 			order := new(conekta.Order)
-			order.ID = "ord_2iGvvypPNmxqzBcnA"
+			order.ID = "ord_2iY6n3yfqKWXdBJ4n"
 			order.Reason = "requested_by_client"
 			order.Amunt = 100
 			statusCode, _ := order.Refund()

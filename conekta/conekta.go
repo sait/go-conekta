@@ -3,8 +3,11 @@ package conekta
 import (
 	"bytes"
 	"encoding/json"
-	"net/http"
+	"fmt"
 	"io/ioutil"
+	"net/http"
+	"strconv"
+	"strings"
 )
 
 type ConektaError struct {
@@ -51,4 +54,11 @@ func checkError(err error) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func ConektaFormatAmount(value float64) (formatted int64, err error) {
+	strnum := fmt.Sprintf("%.2f", value)
+	strnum = strings.Replace(strnum, ".", "", -1)
+	formatted, err = strconv.ParseInt(strnum, 10, 64)
+	return
 }
