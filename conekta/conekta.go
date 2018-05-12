@@ -23,6 +23,56 @@ type Detail struct {
 	Code          string `json:"code,omitempty"`
 }
 
+type ConektaResponse struct {
+	Livemode        *bool           `json:"livemode,omitempty"`
+	Amount          int64           `json:"amount,omitempty"`
+	Currency        string          `json:"currency,omitempty"`
+	PaymentStatus   string          `json:"payment_status,omitempty"`
+	AmountRefunded  int64           `json:"amount_refunded,omitempty"`
+	CustomerInfo    CustomerInfo    `json:"customer_info,omitempty"`
+	ShippingContact ShippingContact `json:"shipping_contact,omitempty"`
+	Object          string          `json:"object,omitempty"`
+	ID              string          `json:"id,omitempty"`
+	Metadata        Metadata        `json:"metadata,omitempty,omitempty"`
+	CreatedAt       int64           `json:"created_at,omitempty"`
+	UpdatedAt       int64           `json:"updated_at,omitempty"`
+	LineItems       LineItems       `json:"line_items,omitempty"`
+	ShippingLines   ShippingLines   `json:"shipping_lines,omitempty"`
+	Charges         Charges         `json:"charges,omitempty"`
+}
+
+type Charges struct {
+	Object  string   `json:"object,omitempty"`
+	HasMore *bool    `json:"has_more,omitempty"`
+	Total   int64    `json:"total,omitempty"`
+	Data    []Charge `json:"data,omitempty"`
+}
+
+type ShippingLines struct {
+	Object  string         `json:"object,omitempty"`
+	HasMore *bool          `json:"has_more,omitempty"`
+	Total   int64          `json:"total,omitempty"`
+	Data    []ShippingLine `json:"data,omitempty"`
+}
+
+type CustomerInfo struct {
+	Email      string `json:"email,omitempty"`
+	Phone      string `json:"phone,omitempty"`
+	Name       string `json:"name,omitempty"`
+	Corporate  *bool  `json:"corporate,omitempty"`
+	CustomerID string `json:"customer_id,omitempty"`
+	Object     string `json:"object,omitempty"`
+}
+
+type LineItems struct {
+	Object  string     `json:"object,omitempty"`
+	HasMore *bool      `json:"has_more,omitempty"`
+	Total   int64      `json:"total,omitempty"`
+	Data    []LineItem `json:"data,omitempty"`
+}
+
+type AntifraudInfo map[string]string
+
 var (
 	ApiKey, ApiVersion = "", "2.0.0"
 )

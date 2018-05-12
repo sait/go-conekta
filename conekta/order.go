@@ -14,8 +14,8 @@ type Order struct {
 	ShippingLines   []ShippingLine   `json:"shipping_lines,omitempty"`
 	TaxLines        []TaxLine        `json:"tax_lines,omitempty"`
 	DiscountLines   []DiscountLine   `json:"discount_lines,omitempty"`
-	Livemode        bool             `json:"livemode,omitempty"`
-	PreAuthorize    bool             `json:"pre_authorize,omitempty"`
+	Livemode        *bool            `json:"livemode,omitempty"`
+	PreAuthorize    *bool            `json:"pre_authorize,omitempty"`
 	ShippingContact *ShippingContact `json:"shipping_contact,omitempty"`
 	Amunt           float64          `json:"amount,omitempty"`
 	Reason          string           `json:"reason,omitempty"`
@@ -27,23 +27,24 @@ type Order struct {
 }
 
 type LineItem struct {
-	ID          string   `json:"id,omitempty"`
-	Object      string   `json:"object,omitempty"`
-	Name        string   `json:"name,omitempty"`
-	Description string   `json:"description,omitempty"`
-	UnitPrice   int64    `json:"unit_price,omitempty"`
-	Quantity    int64    `json:"quantity,omitempty"`
-	Sku         string   `json:"sku,omitempty"`
-	Tags        Tags     `json:"tags,omitempty"`
-	Brand       string   `json:"brand,omitempty"`
-	ParentID    string   `json:"parent_id,omitempty"`
-	Metadata    Metadata `json:"metadata,omitempty"`
+	ID            string        `json:"id,omitempty"`
+	Object        string        `json:"object,omitempty"`
+	Name          string        `json:"name,omitempty"`
+	Description   string        `json:"description,omitempty"`
+	UnitPrice     int64         `json:"unit_price,omitempty"`
+	Quantity      int64         `json:"quantity,omitempty"`
+	Sku           string        `json:"sku,omitempty"`
+	Tags          Tags          `json:"tags,omitempty"`
+	Brand         string        `json:"brand,omitempty"`
+	ParentID      string        `json:"parent_id,omitempty"`
+	Metadata      Metadata      `json:"metadata,omitempty"`
+	AntifraudInfo AntifraudInfo `json:"antifraud_info,omitempty"`
 }
 
 type ShippingLine struct {
 	ID             string   `json:"id,omitempty"`
 	Object         string   `json:"object,omitempty"`
-	Amunt          float64  `json:"amount,omitempty"`
+	Amount         float64  `json:"amount,omitempty"`
 	TrackingNumber string   `json:"tracking_number,omitempty"`
 	Carrier        string   `json:"carrier,omitempty"`
 	Method         string   `json:"method,omitempty"`
@@ -77,22 +78,42 @@ type Metadata map[string]string
 type Charge struct {
 	ID                  string        `json:"id,omitempty"`
 	Object              string        `json:"object,omitempty"`
+	Description         string        `json:"description,omitempty"`
 	CreatedAt           int64         `json:"created_at,omitempty"`
 	UpdatedAt           int64         `json:"updated_at,omitempty"`
 	ExpiresAt           int64         `json:"expires_at,omitempty"`
 	Currency            string        `json:"currency,omitempty"`
 	Amount              float64       `json:"amount,omitempty"`
 	MonthlyInstallments float64       `json:"monthly_installments,omitempty"`
-	Livemode            bool          `json:"livemode,omitempty"`
+	Livemode            *bool         `json:"livemode,omitempty"`
 	Status              string        `json:"status,omitempty"`
 	Fee                 float64       `json:"fee,omitempty"`
 	OrderID             string        `json:"order_id,omitempty"`
+	CustomerID          string        `json:"customer_id,omitempty"`
+	DeviceFingerprint   string        `json:"device_fingerprint,omitempty"`
+	PaidAt              int64         `json:"paid_at,omitempty"`
 	PaymentMethod       PaymentMethod `json:"payment_method,omitempty"`
 }
 
 type PaymentMethod struct {
-	Type    string `json:"type,omitempty"`
-	TokenId string `json:"token_id,omitempty"`
+	Type        string `json:"type,omitempty"`
+	TokenId     string `json:"token_id,omitempty"`
+	ServiceName string `json:"service_name,omitempty"`
+	BarcodeURL  string `json:"barcode_url,omitempty"`
+	Object      string `json:"object,omitempty"`
+	ExpiresAt   int64  `json:"expires_at,omitempty"`
+	StoreName   string `json:"store_name,omitempty"`
+	Reference   string `json:"reference,omitempty"`
+	Name        string `json:"name,omitempty"`
+	ExpMonth    string `json:"exp_month,omitempty"`
+	ExpYear     string `json:"exp_year,omitempty"`
+	AuthCode    string `json:"auth_code,omitempty"`
+	Last4       string `json:"last4,omitempty"`
+	Brand       string `json:"brand,omitempty"`
+	Issuer      string `json:"issuer,omitempty"`
+	AccountType string `json:"account_type,omitempty"`
+	Country     string `json:"country,omitempty"`
+	FraudScore  int64  `json:"fraud_score,omitempty"`
 }
 
 // Creates a new Order

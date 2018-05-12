@@ -29,7 +29,7 @@ var _ = Describe("Handle order", func() {
 			}
 			order.LineItems = append(order.LineItems, item)
 			shipping := conekta.ShippingLine{
-				Amunt:   1500,
+				Amount:  1500,
 				Carrier: "FEDEX",
 			}
 			order.ShippingLines = append(order.ShippingLines, shipping)
@@ -51,7 +51,7 @@ var _ = Describe("Handle order", func() {
 			}
 			charge := conekta.Charge{
 				PaymentMethod: conekta.PaymentMethod{
-					Type: "default",
+					Type: "oxxo_cash",
 				},
 			}
 			order.Charges = append(order.Charges, charge)
