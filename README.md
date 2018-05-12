@@ -53,10 +53,10 @@ order.CustomerInfo.Name = "Fulanito Pérez"
 order.CustomerInfo.Email = "fulanito@conekta.com"
 order.CustomerInfo.Phone = "+52181818181"
 statusCode, conektaError, conektaResponde := order.Create()
-	if statusCode != 200 {
-		fmt.Println("There's a problem :(")
-		panic(conektaError)
-	}
+if statusCode != 200 {
+    fmt.Println("There's a problem :(")
+    panic(conektaError)
+}
 fmt.Println(conektaResponde)
 fmt.Println("Congratulations!!")
 ```
