@@ -96,61 +96,73 @@ type Charge struct {
 }
 
 type PaymentMethod struct {
-	Type        string `json:"type,omitempty"`
-	TokenId     string `json:"token_id,omitempty"`
-	ServiceName string `json:"service_name,omitempty"`
-	BarcodeURL  string `json:"barcode_url,omitempty"`
-	Object      string `json:"object,omitempty"`
-	ExpiresAt   int64  `json:"expires_at,omitempty"`
-	StoreName   string `json:"store_name,omitempty"`
-	Reference   string `json:"reference,omitempty"`
-	Name        string `json:"name,omitempty"`
-	ExpMonth    string `json:"exp_month,omitempty"`
-	ExpYear     string `json:"exp_year,omitempty"`
-	AuthCode    string `json:"auth_code,omitempty"`
-	Last4       string `json:"last4,omitempty"`
-	Brand       string `json:"brand,omitempty"`
-	Issuer      string `json:"issuer,omitempty"`
-	AccountType string `json:"account_type,omitempty"`
-	Country     string `json:"country,omitempty"`
-	FraudScore  int64  `json:"fraud_score,omitempty"`
+	Type        string  `json:"type,omitempty"`
+	TokenId     string  `json:"token_id,omitempty"`
+	ServiceName string  `json:"service_name,omitempty"`
+	BarcodeURL  string  `json:"barcode_url,omitempty"`
+	Object      string  `json:"object,omitempty"`
+	ExpiresAt   int64   `json:"expires_at,omitempty"`
+	StoreName   string  `json:"store_name,omitempty"`
+	Reference   string  `json:"reference,omitempty"`
+	Name        string  `json:"name,omitempty"`
+	ExpMonth    string  `json:"exp_month,omitempty"`
+	ExpYear     string  `json:"exp_year,omitempty"`
+	AuthCode    string  `json:"auth_code,omitempty"`
+	Last4       string  `json:"last4,omitempty"`
+	Brand       string  `json:"brand,omitempty"`
+	Issuer      string  `json:"issuer,omitempty"`
+	AccountType string  `json:"account_type,omitempty"`
+	Country     string  `json:"country,omitempty"`
+	FraudScore  float64 `json:"fraud_score,omitempty"`
 }
 
 // Creates a new Order
-func (o *Order) Create() (statusCode int, conektaError *ConektaError) {
+func (o *Order) Create() (statusCode int, conektaError ConektaError, conektaResponse ConektaResponse) {
 	statusCode, response := request("POST", "/orders", o)
 	if statusCode != 200 {
 		err := json.Unmarshal(response, &conektaError)
+		checkError(err)
+	} else {
+		err := json.Unmarshal(response, &conektaResponse)
 		checkError(err)
 	}
 	return
 }
 
 // Updates an existing Order
-func (o *Order) Update() (statusCode int, conektaError *ConektaError) {
+func (o *Order) Update() (statusCode int, conektaError ConektaError, conektaResponse ConektaResponse) {
 	statusCode, response := request("PUT", "/orders/"+o.ID, o)
 	if statusCode != 200 {
 		err := json.Unmarshal(response, &conektaError)
+		checkError(err)
+	} else {
+		err := json.Unmarshal(response, &conektaResponse)
 		checkError(err)
 	}
 	return
 }
 
 // Process a pre-authorized order.
-func (o *Order) Capture() (statusCode int, conektaError *ConektaError) {
+func (o *Order) Capture() (statusCode int, conektaError ConektaError, conektaResponse ConektaResponse) {
 	statusCode, response := request("POST", "/orders/"+o.ID+"/capture", nil)
 	if statusCode != 200 {
 		err := json.Unmarshal(response, &conektaError)
+		checkError(err)
+	} else {
+		err := json.Unmarshal(response, &conektaResponse)
 		checkError(err)
 	}
 	return
 }
 
 // A Refund details the amount and reason why an order was refunded.
-func (o *Order) Refund() (statusCode int, conektaError *ConektaError) {
+func (o *Order) Refund() (statusCode int, conektaError ConektaError, conektaResponse ConektaResponse) {
 	statusCode, response := request("POST", "/orders/"+o.ID+"/refunds", o)
 	if statusCode != 200 {
 		err := json.Unmarshal(response, &conektaError)
+		checkError(err)
+	} else {
+		err := json.Unmarshal(response, &conektaResponse)
 		checkError(err)
 	}
 	return

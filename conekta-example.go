@@ -39,13 +39,11 @@ func main() {
 	order.CustomerInfo.Email = "fulanito@conekta.com"
 	order.CustomerInfo.Phone = "+52181818181"
 	fmt.Println("Sending order to conekta")
-	statusCode, conektaError := order.Create()
-	if conektaError != nil {
-		panic(conektaError)
-	}
+	statusCode, conektaError, conektaResponde := order.Create()
 	if statusCode != 200 {
 		fmt.Println("There's a problem :(")
-		return
+		panic(conektaError)
 	}
+	fmt.Println(conektaResponde)
 	fmt.Println("Congratulations!!")
 }

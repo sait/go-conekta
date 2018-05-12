@@ -102,7 +102,7 @@ func request(method, path string, v interface{}) (statusCode int, response []byt
 
 func checkError(err error) {
 	if err != nil {
-		panic(err)
+		fmt.Printf("There's an error in Conekta Wrapper: %v\n", err)
 	}
 }
 

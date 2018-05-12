@@ -55,7 +55,7 @@ var _ = Describe("Handle order", func() {
 				},
 			}
 			order.Charges = append(order.Charges, charge)
-			statusCode, _ := order.Create()
+			statusCode, _, _ := order.Create()
 			Expect(statusCode).Should(Equal(200))
 		})
 	})
@@ -85,7 +85,7 @@ var _ = Describe("Handle order", func() {
 			order.CustomerInfo.Name = "Fulanito Pérez"
 			order.CustomerInfo.Email = "fulanito@conekta.com"
 			order.CustomerInfo.Phone = "+52181818181"
-			statusCode, _ := order.Create()
+			statusCode, _, _ := order.Create()
 			Expect(statusCode).Should(Equal(200))
 		})
 	})
@@ -94,7 +94,7 @@ var _ = Describe("Handle order", func() {
 			order := new(conekta.Order)
 			order.ID = "ord_2iGHf3etsiNEji8Ry"
 			order.Currency = "MXN"
-			statusCode, _ := order.Update()
+			statusCode, _, _ := order.Update()
 			Expect(statusCode).Should(Equal(200))
 		})
 	})
@@ -102,7 +102,7 @@ var _ = Describe("Handle order", func() {
 		It("Should response 200", func() {
 			order := new(conekta.Order)
 			order.ID = "ord_2iGPs5fX4uTnqhCJX"
-			statusCode, _ := order.Capture()
+			statusCode, _, _ := order.Capture()
 			//A preauthorized order can captured only once
 			Expect(statusCode).Should(Equal(428))
 		})
@@ -113,7 +113,7 @@ var _ = Describe("Handle order", func() {
 			order.ID = "ord_2iY6n3yfqKWXdBJ4n"
 			order.Reason = "requested_by_client"
 			order.Amunt = 100
-			statusCode, _ := order.Refund()
+			statusCode, _, _ := order.Refund()
 			Expect(statusCode).Should(Equal(200))
 		})
 	})

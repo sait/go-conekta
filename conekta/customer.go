@@ -42,10 +42,13 @@ type Address struct {
 	Object      string `json:"object,omitempty"`
 }
 
-func (c *Customer) Create() (statusCode int, conektaError *ConektaError) {
+func (c *Customer) Create() (statusCode int, conektaError ConektaError, conektaResponse ConektaResponse) {
 	statusCode, response := request("POST", "/customers", c)
 	if statusCode != 200 {
 		err := json.Unmarshal(response, &conektaError)
+		checkError(err)
+	} else {
+		err := json.Unmarshal(response, &conektaResponse)
 		checkError(err)
 	}
 	return
