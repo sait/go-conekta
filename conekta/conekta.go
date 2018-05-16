@@ -112,3 +112,7 @@ func ConektaFormatAmount(value float64) (formatted int64, err error) {
 	formatted, err = strconv.ParseInt(strnum, 10, 64)
 	return
 }
+
+func ConektaFormatToFloat64(conektaFormatted int64) float64 {
+	return float64(conektaFormatted) / 100
+}
