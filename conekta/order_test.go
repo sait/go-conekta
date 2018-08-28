@@ -18,6 +18,7 @@ func TestOrder(t *testing.T) {
 var _ = Describe("Handle order", func() {
 	//Testing key
 	conekta.ApiKey = os.Getenv("CONEKTAKEY")
+	var oid string
 	Context("Create order to a customer", func() {
 		It("Should response 200", func() {
 			//New Order
@@ -85,7 +86,8 @@ var _ = Describe("Handle order", func() {
 			order.CustomerInfo.Name = "Fulanito Pérez"
 			order.CustomerInfo.Email = "fulanito@conekta.com"
 			order.CustomerInfo.Phone = "+52181818181"
-			statusCode, _, _ := order.Create()
+			statusCode, _, response := order.Create()
+			oid = response.ID
 			Expect(statusCode).Should(Equal(200))
 		})
 	})
@@ -110,7 +112,7 @@ var _ = Describe("Handle order", func() {
 	Context("Refound order", func() {
 		It("Should response 200", func() {
 			order := new(conekta.Order)
-			order.ID = "ord_2iZfccNty2Feh1mmh"
+			order.ID = oid
 			order.Reason = "requested_by_client"
 			order.Amunt = 100
 			statusCode, _, _ := order.Refund()
