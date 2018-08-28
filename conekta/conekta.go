@@ -23,6 +23,8 @@ type Detail struct {
 	Code          string `json:"code,omitempty"`
 }
 
+type body map[string]interface{}
+
 type ConektaResponse struct {
 	Livemode        *bool           `json:"livemode,omitempty"`
 	Amount          int64           `json:"amount,omitempty"`

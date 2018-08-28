@@ -71,9 +71,9 @@ type DiscountLine struct {
 	Metadata Metadata `json:"metadata,omitempty"`
 }
 
-type Tags map[string]string
+type Tags map[string]interface{}
 
-type Metadata map[string]string
+type Metadata map[string]interface{}
 
 type Charge struct {
 	ID                  string        `json:"id,omitempty"`
