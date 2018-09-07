@@ -13,6 +13,8 @@ func TestConekta(t *testing.T) {
 	RunSpecs(t, "Format amount")
 }
 
+// Public testing tokens available in
+// https://developers.conekta.com/resources/testing
 var _ = Describe("Formatting amount", func() {
 	Context("Formatting some numbers", func(){
 		var testnum1 float64

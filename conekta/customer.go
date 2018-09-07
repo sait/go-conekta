@@ -5,18 +5,29 @@ import (
 )
 
 type Customer struct {
-	CustomerID       string            `json:"customer_id,omitempty"`
-	Name             string            `json:"name,omitempty"`
-	Phone            string            `json:"phone,omitempty"`
-	Email            string            `json:"email,omitempty"`
-	Corporate        bool              `json:"corporate,omitempty"`
-	PaymentSources   []PaymentSource   `json:"payment_sources,omitempty"`
-	ShippingContacts []ShippingContact `json:"shipping_contacts,omitempty"`
+	CustomerID               string            `json:"customer_id,omitempty"`
+	Name                     string            `json:"name,omitempty"`
+	Phone                    string            `json:"phone,omitempty"`
+	Email                    string            `json:"email,omitempty"`
+	Corporate                bool              `json:"corporate,omitempty"`
+	DefaultPaymentSourceID   string            `json:"default_payment_source_id,omitempty"`
+	DefaultShippingContactID string            `json:"default_shipping_contact_id,omitempty"`
+	PaymentSources           []PaymentSource   `json:"payment_sources,omitempty"`
+	ShippingContacts         []ShippingContact `json:"shipping_contacts,omitempty"`
 }
 
 type PaymentSource struct {
-	TokenID string `json:"token_id,omitempty"`
-	Type    string `json:"type,omitempty"`
+	ID        string `json:"id,omitempty"`
+	Object    string `json:"object,omitempty"`
+	TokenID   string `json:"token_id,omitempty"`
+	Type      string `json:"type,omitempty"`
+	CreatedAt int64  `json:"created_at,omitempty"`
+	Last4     string `json:"last4,omitempty"`
+	Name      string `json:"name,omitempty"`
+	ExpMonth  string `json:"exp_month,omitempty"`
+	ExpYear   string `json:"exp_year,omitempty"`
+	Brand     string `json:"brand,omitempty"`
+	ParentID  string `json:"parent_id,omitempty"`
 }
 
 type ShippingContact struct {
@@ -147,6 +158,30 @@ func (c *Customer) CancelSubscription() (statusCode int, conektaError ConektaErr
 		checkError(err)
 	} else {
 		err := json.Unmarshal(response, &subscription)
+		checkError(err)
+	}
+	return
+}
+
+func (c *Customer) CreatePaymentSource(paymentSource PaymentSource) (statusCode int, conektaError ConektaError, paymentResponse PaymentSource) {
+	statusCode, response := request("POST", "/customers/"+c.CustomerID+"/payment_sources/", paymentSource)
+	if statusCode != 200 {
+		err := json.Unmarshal(response, &conektaError)
+		checkError(err)
+	} else {
+		err := json.Unmarshal(response, &paymentResponse)
+		checkError(err)
+	}
+	return
+}
+
+func (c *Customer) DeletePaymentSource(paymentSourceID string) (statusCode int, conektaError ConektaError, paymentResponse PaymentSource) {
+	statusCode, response := request("DELETE", "/customers/"+c.CustomerID+"/payment_sources/"+paymentSourceID, nil)
+	if statusCode != 200 {
+		err := json.Unmarshal(response, &conektaError)
+		checkError(err)
+	} else {
+		err := json.Unmarshal(response, &paymentResponse)
 		checkError(err)
 	}
 	return
