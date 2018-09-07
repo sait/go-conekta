@@ -68,6 +68,30 @@ func (c *Customer) Create() (statusCode int, conektaError ConektaError, conektaR
 	return
 }
 
+func (c *Customer) Update() (statusCode int, conektaError ConektaError, conektaResponse ConektaResponse) {
+	statusCode, response := request("PUT", "/customers/"+c.CustomerID, c)
+	if statusCode != 200 {
+		err := json.Unmarshal(response, &conektaError)
+		checkError(err)
+	} else {
+		err := json.Unmarshal(response, &conektaResponse)
+		checkError(err)
+	}
+	return
+}
+
+func (c *Customer) Delete() (statusCode int, conektaError ConektaError, conektaResponse ConektaResponse) {
+	statusCode, response := request("DELETE", "/customers/"+c.CustomerID, nil)
+	if statusCode != 200 {
+		err := json.Unmarshal(response, &conektaError)
+		checkError(err)
+	} else {
+		err := json.Unmarshal(response, &conektaResponse)
+		checkError(err)
+	}
+	return
+}
+
 func (c *Customer) CreateSubscription(plan string) (statusCode int, conektaError ConektaError, subscription Subscription) {
 	statusCode, response := request("POST", "/customers/"+c.CustomerID+"/subscription", body{"plan": plan})
 	if statusCode != 200 {

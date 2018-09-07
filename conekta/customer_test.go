@@ -39,6 +39,19 @@ var _ = Describe("Creating customer", func() {
 		})
 	})
 
+	Context("Update a customer", func() {
+		//New customer
+		customer := new(conekta.Customer)
+		customer.CustomerID = cusid
+		customer.Name = "Zutano Pérez"
+		customer.Email = "zutano@conekta.com"
+		customer.Phone = "+52181818181"
+		statusCode, _, _ := customer.Update()
+		It("Should response 200", func() {
+			Expect(statusCode).Should(Equal(200))
+		})
+	})
+
 	Context("Create a subscription", func() {
 		customer := new(conekta.Customer)
 		customer.CustomerID = cusid
@@ -79,6 +92,15 @@ var _ = Describe("Creating customer", func() {
 		customer := new(conekta.Customer)
 		customer.CustomerID = cusid
 		statusCode, _, _ := customer.CancelSubscription()
+		It("Should response 200", func() {
+			Expect(statusCode).Should(Equal(200))
+		})
+	})
+
+	Context("Delete a customer", func() {
+		customer := new(conekta.Customer)
+		customer.CustomerID = cusid
+		statusCode, _, _ := customer.Delete()
 		It("Should response 200", func() {
 			Expect(statusCode).Should(Equal(200))
 		})
