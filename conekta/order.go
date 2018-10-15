@@ -66,7 +66,7 @@ type DiscountLine struct {
 	Object   string   `json:"object,omitempty"`
 	Code     string   `json:"code,omitempty"`
 	Type     string   `json:"type,omitempty"`
-	Amount   float64  `json:"amount,omitempty"`
+	Amount   int64    `json:"amount,omitempty"`
 	ParentID string   `json:"parent_id,omitempty"`
 	Metadata Metadata `json:"metadata,omitempty"`
 }
