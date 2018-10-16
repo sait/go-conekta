@@ -98,6 +98,7 @@ type Charge struct {
 type PaymentMethod struct {
 	Type                   string  `json:"type,omitempty"`
 	TokenId                string  `json:"token_id,omitempty"`
+	PaymentSourceID        string  `json:"payment_source_id,omitempty"`
 	ServiceName            string  `json:"service_name,omitempty"`
 	BarcodeURL             string  `json:"barcode_url,omitempty"`
 	Object                 string  `json:"object,omitempty"`
