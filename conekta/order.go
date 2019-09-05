@@ -10,7 +10,7 @@ type Order struct {
 	CreatedAt       int64            `json:"created_at,omitempty"`
 	UpdatedAt       int64            `json:"updated_at,omitempty"`
 	Currency        string           `json:"currency,omitempty"`
-	LineItems       []LineItem       `json:"line_items,omitempty"`
+	LineItems       []LineItem       `json:"line_items"`
 	ShippingLines   []ShippingLine   `json:"shipping_lines,omitempty"`
 	TaxLines        []TaxLine        `json:"tax_lines,omitempty"`
 	DiscountLines   []DiscountLine   `json:"discount_lines,omitempty"`
@@ -31,7 +31,7 @@ type LineItem struct {
 	Object        string        `json:"object,omitempty"`
 	Name          string        `json:"name,omitempty"`
 	Description   string        `json:"description,omitempty"`
-	UnitPrice     int64         `json:"unit_price,omitempty"`
+	UnitPrice     int64         `json:"unit_price"`
 	Quantity      int64         `json:"quantity,omitempty"`
 	Sku           string        `json:"sku,omitempty"`
 	Tags          Tags          `json:"tags,omitempty"`

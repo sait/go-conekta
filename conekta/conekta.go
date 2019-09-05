@@ -38,7 +38,7 @@ type ConektaResponse struct {
 	Metadata        Metadata        `json:"metadata,omitempty,omitempty"`
 	CreatedAt       int64           `json:"created_at,omitempty"`
 	UpdatedAt       int64           `json:"updated_at,omitempty"`
-	LineItems       LineItems       `json:"line_items,omitempty"`
+	LineItems       LineItems       `json:"line_items"`
 	ShippingLines   ShippingLines   `json:"shipping_lines,omitempty"`
 	Charges         Charges         `json:"charges,omitempty"`
 }
